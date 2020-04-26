@@ -1,0 +1,23 @@
+Australia A-League
+Sweden Allsvenskan
+Germany Bundesliga
+Poland Ekstraklasa
+Netherlands Eredivisie
+Japan J1 League
+Belgium Jupiler League
+Spain LaLiga
+Romania Liga 1
+Mexico Liga MX
+France Ligue 1
+USA MLS
+Ireland Premier Division
+England Premier League
+Scotland Premiership
+Portugal Primeira Liga
+Italy Serie A
+Brazil Serie A
+Switzerland Super League
+China Super League
+Turkey Super Lig
+Argentina Superliga
+Denmark Superliga

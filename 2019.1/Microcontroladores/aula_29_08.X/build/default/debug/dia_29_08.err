@@ -1,0 +1,17 @@
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 128 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 130 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 165 : Found label after column 1. (ROTINA1_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 173 : Found label after column 1. (ROTINA1_2_C1)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 179 : Found label after column 1. (ROTINA1_2_C2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 185 : Found label after column 1. (ROTINA1_2_C3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 195 : Found label after column 1. (ROTINA2_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 203 : Found label after column 1. (ROTINA2_2_C1)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 208 : Found label after column 1. (ROTINA2_2_C2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 213 : Found label after column 1. (ROTINA2_2_C3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 225 : Found label after column 1. (ROTINA3_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 230 : Found label after column 1. (ROTINA3_3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 236 : Found label after column 1. (ROTINA3_3_C1)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 242 : Found label after column 1. (ROTINA3_3_C2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 252 : Found label after column 1. (ROTINA4_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 257 : Found label after column 1. (ROTINA4_3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/aula_29_08.X/dia_29_08.ASM 262 : Found label after column 1. (ROTINA4_4)

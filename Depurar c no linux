@@ -1,0 +1,17 @@
+qnd de o comando de compilar acrescenta -g
+pra executar o debug usa-se o comando gdb nome_do_programa
+
+comandos (esses comandos podem ser usados só com a primeira letra): 
+
+list ou l -> mostra o código e as linhas de cada trecho
+run ou r executa a linha ou trecho ou código
+next ou n-> próxima linha
+info local > mostra os valores das variáveis locais da função em questão
+print ou p variavel -> para assistir o valor da variável naquele momento
+break número_da_linha_ou_nome_da_função -> coloca um breakpoint nesta linha
+step -> entra na função. Testar e ver a diferença para info
+down/up -> 
+finish ou fin -> sai da função que vc ta analisando
+quit ou q-> sair
+
+

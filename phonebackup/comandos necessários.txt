@@ -1,0 +1,38 @@
+Comandos a serem executados no cmd dentro da pasta "platform-tools"
+
+passo 1:
+
+adb devices
+
+adb backup -f backup.ab -noapk -noobb -noshared com.android.providers.settings -system -keyvalue
+
+se o comando acima não funcionar, usar este abaixo com "-all" no lugar de "com.android.providers.settings".
+adb backup -f backup.ab -noapk -noobb -noshared -all -system -keyvalue
+
+passo 2: 
+copiar o arquivo backup.ab gerado nesta pasta para a pasta phonebackup
+no cmd ir através do comando "cd" para a pasta phonebackup e executar o comando abaixo
+
+no windows:
+java.exe -jar abe.jar unpack backup.ab backup.tar ""
+
+no linux:
+java -jar abe.jar unpack backup.ab backup.tar ""
+
+extrair o arquivo .rar gerado e ir para com.android.providers.settings->a_pasta_que_aparecer-> e abrir com um editor de texto o arquivo: com.android.providers.settings.data. Neste arquivo estão os ssid e senhas salvas no celular.
+
+
+outra opção de comando:
+
+no windows:
+adb pull /data/misc/wifi/wpa_supplicant.conf c:/wpa_supplicant.conf
+
+no linux:
+adb pull /data/misc/wifi/wpa_supplicant.conf ~/wpa_supplicant.conf
+
+
+Obs.: para reiniciar o adb:
+adb kill-server
+adb start-server
+
+referência: https://www.youtube.com/watch?v=6uZ9ykLBP1A

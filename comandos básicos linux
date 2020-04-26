@@ -1,0 +1,7 @@
+Procurar arquivos no diretório raiz, que comecem com as iniciais 'ma'
+
+$ find / -name ma*
+
+Ou procurar todos os arquivos '.txt' no diretório home do usuário fulano:
+
+$ find /home/fulano -name *.txt

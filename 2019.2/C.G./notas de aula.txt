@@ -1,0 +1,8 @@
+para a iluminicação precisamos:
+
+fonte de luz -> objeto na cena. Ta ali mas nao existe visualmente e pode estar fora do volume de visualização
+pq nao é objeto visível, mas o efeito sim. Tem que prestar atenção onde colocar a fonte de luz. Não colocar dentro do objeto
+se não, não dar para ver nada.
+
+
+

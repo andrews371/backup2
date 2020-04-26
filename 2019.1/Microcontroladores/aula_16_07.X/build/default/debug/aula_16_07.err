@@ -1,0 +1,4 @@
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/aula_16_07.X/aula_16_07.ASM 130 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/aula_16_07.X/aula_16_07.ASM 132 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/aula_16_07.X/aula_16_07.ASM 134 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] /home/andre/Documents/2019.1/Microcontroladores/aula_16_07.X/aula_16_07.ASM 162 : Using default destination of 1 (file).

@@ -1,0 +1,54 @@
+Croatia 1. HNL
+Denmark 1st Division
+Germany 2. Bundesliga
+Austria 2. Liga
+Germany 3. Liga
+Australia A-League
+Sweden Allsvenskan
+Germany Bundesliga
+Switzerland Challenge League
+England Championship
+Scotland Championship
+Poland Division 1
+Netherlands Eerste Divisie
+Poland Ekstraklasa
+Norway Eliteserien
+Netherlands Eredivisie
+Japan J1 League
+Japan J2 League
+Belgium Jupiler League
+Spain LaLiga
+Spain LaLiga2
+England League One
+England League Two
+Romania Liga 1
+Colombia Liga Aguila
+Mexico Liga MX
+Portugal LigaPro
+France Ligue 1
+France Ligue 2
+USA MLS
+France National
+England National League
+Norway OBOS-ligaen
+Hungary OTP Bank Liga
+Ireland Premier Division
+England Premier League
+Russia Premier League
+Scotland Premiership
+Portugal Primeira Liga
+Argentina Primera Nacional
+Italy Serie A
+Brazil Serie A
+Italy Serie B
+Brazil Serie B
+Switzerland Super League
+China Super League
+Greece Super League
+Turkey Super Lig
+Sweden Superettan
+Argentina Superliga
+Denmark Superliga
+Austria Tipico Bundesliga
+Finland Veikkausliiga
+Finland Ykkonen

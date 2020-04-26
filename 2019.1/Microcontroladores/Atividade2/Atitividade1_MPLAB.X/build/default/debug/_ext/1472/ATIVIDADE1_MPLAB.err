@@ -1,0 +1,7 @@
+Message[302] ../ATIVIDADE1_MPLAB.ASM 128 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] ../ATIVIDADE1_MPLAB.ASM 129 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] ../ATIVIDADE1_MPLAB.ASM 131 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[203] ../ATIVIDADE1_MPLAB.ASM 157 : Found opcode in column 1. (GOTO)
+Warning[207] ../ATIVIDADE1_MPLAB.ASM 167 : Found label after column 1. (CONTA_AA)
+Warning[207] ../ATIVIDADE1_MPLAB.ASM 182 : Found label after column 1. (CONTA_BB)
+Warning[203] ../ATIVIDADE1_MPLAB.ASM 195 : Found opcode in column 1. (RETURN)

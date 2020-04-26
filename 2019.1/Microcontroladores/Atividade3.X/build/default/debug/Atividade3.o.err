@@ -1,0 +1,18 @@
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 128 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 129 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 131 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 166 : Found label after column 1. (ROTINA1_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 174 : Found label after column 1. (ROTINA1_2_C1)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 180 : Found label after column 1. (ROTINA1_2_C2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 186 : Found label after column 1. (ROTINA1_2_C3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 196 : Found label after column 1. (ROTINA2_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 204 : Found label after column 1. (ROTINA2_2_C1)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 209 : Found label after column 1. (ROTINA2_2_C2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 214 : Found label after column 1. (ROTINA2_2_C3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 226 : Found label after column 1. (ROTINA3_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 231 : Found label after column 1. (ROTINA3_3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 237 : Found label after column 1. (ROTINA3_3_C1)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 243 : Found label after column 1. (ROTINA3_3_C2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 253 : Found label after column 1. (ROTINA4_2)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 258 : Found label after column 1. (ROTINA4_3)
+Warning[207] /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM 263 : Found label after column 1. (ROTINA4_4)

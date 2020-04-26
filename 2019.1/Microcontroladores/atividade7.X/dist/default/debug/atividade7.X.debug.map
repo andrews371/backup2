@@ -1,0 +1,86 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Thu Sep 19 14:31:57 2019
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x00014e
+.config_2007_BUILD/DEFAULT/DEBUG/ATIVIDADE7.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x0000aa      
+                            0x002007    0x002007      
+            171 out of 1158 program addresses used, program memory utilization is 14%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   COMECO   0x00001e    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                DELAY_100   0x000085    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+               DELAY_10US   0x0000a0    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                 DELAY_60   0x000095    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  IGUAL10   0x000072    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  IGUAL15   0x000077    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  IGUAL20   0x00007c    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                   IGUAL5   0x00006d    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                   INICIO   0x00000d    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                     MAIN   0x00001a    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                    MAIOR   0x00005b    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  MAIOR20   0x000081    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+              MAIOR_IGUAL   0x000058    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+            MAIOR_IGUAL_L   0x000064    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                    MENOR   0x00005c    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                   MENOR5   0x000068    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  MENOR_L   0x000065    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  SAI_INT   0x000007    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+               SUBROTINA1   0x00000c    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+           TEMPO_RESPOSTA   0x000030    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                TESTA_LOW   0x00005f    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+        TESTE_INICIAL_GP3   0x00002d    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+      VERIFICAR_DISTANCIA   0x000053    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+             _.org_1_0032   0x000032    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+             _.org_1_008E   0x00008e    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+             _.org_1_009E   0x00009e    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  SAI_INT   0x000007    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+               SUBROTINA1   0x00000c    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                   INICIO   0x00000d    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                     MAIN   0x00001a    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                   COMECO   0x00001e    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+        TESTE_INICIAL_GP3   0x00002d    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+           TEMPO_RESPOSTA   0x000030    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+             _.org_1_0032   0x000032    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+      VERIFICAR_DISTANCIA   0x000053    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+              MAIOR_IGUAL   0x000058    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                    MAIOR   0x00005b    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                    MENOR   0x00005c    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                TESTA_LOW   0x00005f    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+            MAIOR_IGUAL_L   0x000064    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  MENOR_L   0x000065    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                   MENOR5   0x000068    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                   IGUAL5   0x00006d    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  IGUAL10   0x000072    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  IGUAL15   0x000077    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  IGUAL20   0x00007c    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                  MAIOR20   0x000081    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                DELAY_100   0x000085    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+             _.org_1_008E   0x00008e    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+                 DELAY_60   0x000095    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+             _.org_1_009E   0x00009e    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+               DELAY_10US   0x0000a0    program     static /home/andre/Documents/2019.1/Microcontroladores/atividade7.X/atividade7.ASM
+
+

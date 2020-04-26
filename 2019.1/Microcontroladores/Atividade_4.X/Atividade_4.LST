@@ -1,0 +1,683 @@
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00002 ;*              MODIFICAÇÕES PARA USO COM 12F675                   *
+                      00003 ;*                FEITAS PELO PROF. MARDSON                        *
+                      00004 ;*                      JUNHO DE 2019                              *
+                      00005 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00006 
+                      00007 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00008 ;*                      ATIVIDADE 4                                *
+                      00009 ;*            ANDRE OLIVEIRA DE SOUSA - 11325684                   *
+                      00010 ;*         DESENVOLVIDO PELA MOSAICO ENGENHARIA E CONSULTORIA      *
+                      00011 ;*   VERSÃO: 1.0                           DATA: 17/06/03          *
+                      00012 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00013 ;*                     DESCRIÇÃO DO ARQUIVO                        *
+                      00014 ;*-----------------------------------------------------------------*
+                      00015 ;*   MODELO PARA O PIC 12F675                                      *
+                      00016 ;*                                                                 *
+                      00017 ;*                                                                 *
+                      00018 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00019 
+                      00020 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00021 ;*                     ARQUIVOS DE DEFINIÇÕES                      *
+                      00022 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00023 #INCLUDE <p12f675.inc>  ;ARQUIVO PADRÃO MICROCHIP PARA 12F675
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Mar 17 2019
+                      00005 ;  MPASM PIC12F675 processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2019 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00367         LIST
+                      00024 
+2007   3FA4           00025         __CONFIG _BODEN_OFF & _CP_OFF & _PWRTE_ON & _WDT_OFF & _MCLRE_ON & _INTRC_OSC_NOCLKOUT
+                      00026 
+                      00027 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00028 ;*                    PAGINAÇÃO DE MEMÓRIA                         *
+                      00029 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00030 ;DEFINIÇÃO DE COMANDOS DE USUÁRIO PARA ALTERAÇÃO DA PÁGINA DE MEMÓRIA
+                      00031 #DEFINE BANK0   BCF STATUS,RP0  ;SETA BANK 0 DE MEMÓRIA
+                      00032 #DEFINE BANK1   BSF STATUS,RP0  ;SETA BANK 1 DE MAMÓRIA
+                      00033 
+                      00034 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00035 ;*                         VARIÁVEIS                               *
+                      00036 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00037 ; DEFINIÇÃO DOS NOMES E ENDEREÇOS DE TODAS AS VARIÁVEIS UTILIZADAS 
+                      00038 ; PELO SISTEMA
+                      00039 
+                      00040         CBLOCK  0x20    ;ENDEREÇO INICIAL DA MEMÓRIA DE
+                      00041                                         ;USUÁRIO
+  00000020            00042                 W_TEMP          ;REGISTRADORES TEMPORÁRIOS PARA USO
+  00000021            00043                 STATUS_TEMP     ;JUNTO ÀS INTERRUPÇÕES
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00044 
+                      00045                 ;NOVAS VARIÁVEIS
+                      00046                 
+  00000022            00047                 CONT_DELAY_95
+  00000023            00048                 CONT_DELAY_60
+  00000024            00049                 CONT_DELAY_40
+                      00050 
+                      00051         ENDC                    ;FIM DO BLOCO DE MEMÓRIA
+                      00052 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00053 ;*                        FLAGS INTERNOS                           *
+                      00054 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00055 ; DEFINIÇÃO DE TODOS OS FLAGS UTILIZADOS PELO SISTEMA
+                      00056 
+                      00057 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00058 ;*                         CONSTANTES                              *
+                      00059 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00060 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
+                      00061 
+                      00062 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00063 ;*                           ENTRADAS                              *
+                      00064 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00065 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO ENTRADA
+                      00066 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00067 
+                      00068 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00069 ;*                           SAÍDAS                                *
+                      00070 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00071 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO SAÍDA
+                      00072 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00073 
+                      00074 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00075 ;*                       VETOR DE RESET                            *
+                      00076 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00077 
+0000                  00078         ORG     0x00                    ;ENDEREÇO INICIAL DE PROCESSAMENTO
+0000   280D           00079         GOTO    INICIO
+                      00080         
+                      00081 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00082 ;*                    INÍCIO DA INTERRUPÇÃO                        *
+                      00083 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00084 ; ENDEREÇO DE DESVIO DAS INTERRUPÇÕES. A PRIMEIRA TAREFA É SALVAR OS
+                      00085 ; VALORES DE "W" E "STATUS" PARA RECUPERAÇÃO FUTURA
+                      00086 
+0004                  00087         ORG     0x04                    ;ENDEREÇO INICIAL DA INTERRUPÇÃO
+0004   00A0           00088         MOVWF   W_TEMP          ;COPIA W PARA W_TEMP
+0005   0E03           00089         SWAPF   STATUS,W
+0006   00A1           00090         MOVWF   STATUS_TEMP     ;COPIA STATUS PARA STATUS_TEMP
+                      00091 
+                      00092 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00093 ;*                    ROTINA DE INTERRUPÇÃO                        *
+                      00094 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00095 ; AQUI SERÃO ESCRITAS AS ROTINAS DE RECONHECIMENTO E TRATAMENTO DAS
+                      00096 ; INTERRUPÇÕES
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00097 
+                      00098 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00099 ;*                 ROTINA DE SAÍDA DA INTERRUPÇÃO                  *
+                      00100 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00101 ; OS VALORES DE "W" E "STATUS" DEVEM SER RECUPERADOS ANTES DE 
+                      00102 ; RETORNAR DA INTERRUPÇÃO
+                      00103 
+0007                  00104 SAI_INT
+0007   0E21           00105         SWAPF   STATUS_TEMP,W
+0008   0083           00106         MOVWF   STATUS          ;MOVE STATUS_TEMP PARA STATUS
+0009   0EA0           00107         SWAPF   W_TEMP,F
+000A   0E20           00108         SWAPF   W_TEMP,W        ;MOVE W_TEMP PARA W
+000B   0009           00109         RETFIE
+                      00110 
+                      00111 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00112 ;*                       ROTINAS E SUBROTINAS                      *
+                      00113 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00114 ; CADA ROTINA OU SUBROTINA DEVE POSSUIR A DESCRIÇÃO DE FUNCIONAMENTO
+                      00115 ; E UM NOME COERENTE ÀS SUAS FUNÇÕES.
+                      00116 
+000C                  00117 SUBROTINA1
+                      00118 
+                      00119         ;CORPO DA ROTINA
+                      00120 
+000C   0008           00121         RETURN
+                      00122 
+                      00123 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00124 ;*                     INICIO DO PROGRAMA                          *
+                      00125 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00126         
+000D                  00127 INICIO
+000D   1683           00128         BANK1                           ;ALTERA PARA O BANCO 1
+000E   300B           00129         MOVLW   B'00001011' ;CONFIGURA TODAS AS PORTAS DO GPIO (PINOS)
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000F   0085           00130         MOVWF   TRISIO          ;COMO SAÍDAS
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0010   019F           00131         CLRF    ANSEL           ;DEFINE PORTAS COMO Digital I/O
+0011   3001           00132         MOVLW   B'00000001'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0012   0081           00133         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO
+0013   3000           00134         MOVLW   B'00000000'
+0014   008B           00135         MOVWF   INTCON          ;DEFINE OPÇÕES DE INTERRUPÇÕES
+                      00136         
+0015   1283           00137         BANK0                           ;RETORNA PARA O BANCO
+0016   3007           00138         MOVLW   B'00000111'
+0017   0099           00139         MOVWF   CMCON           ;DEFINE O MODO DE OPERAÇÃO DO COMPARADOR ANALÓGICO
+                      00140 
+                      00141 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00142 ;*                     INICIALIZAÇÃO DAS VARIÁVEIS                 *
+                      00143 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00144 
+                      00145 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00146 ;*                     ROTINA PRINCIPAL                            *
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00147 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+0018                  00148 MAIN
+                      00149 
+                      00150         ;CORPO DA ROTINA PRINCIPAL 
+                      00151 
+0018   3013           00152     MOVLW   .19
+0019   00A2           00153     MOVWF   CONT_DELAY_95
+                      00154     
+001A   1005           00155     BCF     GPIO,GP0
+001B   1085           00156     BCF     GPIO,GP1
+001C   1185           00157     BCF     GPIO,GP3
+                      00158     
+001D   1505           00159     BSF     GPIO,GP2
+001E   1605           00160     BSF     GPIO,GP4
+001F   1685           00161     BSF     GPIO,GP5
+                      00162     
+Warning[207]: Found label after column 1. (DELAY_5_INICIAL)
+0020                  00163     DELAY_5_INICIAL             
+0020   0181           00164         CLRF    TMR0
+0021   30E9           00165         MOVLW   .233
+0022   0081           00166         MOVWF   TMR0
+0023   1D0B           00167         BTFSS   INTCON,T0IF
+0024   2823           00168         GOTO    $ - 1 
+0025   110B           00169         BCF     INTCON,T0IF
+Warning[207]: Found label after column 1. (DELAY_95_INICIAL)
+0026                  00170     DELAY_95_INICIAL
+0026   0181           00171         CLRF    TMR0
+Message[305]: Using default destination of 1 (file).
+0027   0BA2           00172         DECFSZ  CONT_DELAY_95
+0028   2826           00173         GOTO    DELAY_95_INICIAL
+                      00174         
+Warning[207]: Found label after column 1. (ESCOLHA_LED)
+0029                  00175     ESCOLHA_LED
+0029   1885           00176         BTFSC   GPIO,GP1
+002A   2840           00177         GOTO    VERDE_AZUL
+002B   1805           00178         BTFSC   GPIO,GP0
+002C   2832           00179         GOTO    VERMELHO
+002D   282E           00180         GOTO    DESLIGA_LEDS
+                      00181         
+Warning[207]: Found label after column 1. (DESLIGA_LEDS)
+002E                  00182     DESLIGA_LEDS
+002E   1105           00183         BCF     GPIO,GP2
+002F   1205           00184         BCF     GPIO,GP4
+0030   1285           00185         BCF     GPIO,GP5
+Error[113]  : Symbol not previously defined (TESTE)
+0031   2800           00186         GOTO    TESTE
+                      00187         
+                      00188         
+                      00189         
+                      00190         
+Warning[207]: Found label after column 1. (VERMELHO)
+0032                  00191     VERMELHO
+0032   1985           00192             BTFSC       GPIO,GP3
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0033   2829           00193             GOTO        ESCOLHA_LED
+0034   1885           00194             BTFSC       GPIO,GP1
+0035   2839           00195             GOTO        VERMELHO_SESSENTA_CEM
+0036   1805           00196             BTFSC       GPIO,GP0
+0037   283D           00197             GOTO        VERMELHO_DUTY_CYCLE_20
+0038   283C           00198             GOTO        VERMELHO_DUTY_CYCLE_5
+                      00199 
+Warning[207]: Found label after column 1. (VERMELHO_SESSENTA_CEM)
+0039                  00200         VERMELHO_SESSENTA_CEM    
+0039   1805           00201             BTFSC       GPIO,GP0
+Error[113]  : Symbol not previously defined (VERMELHO_DUTY_CYCLE_600)
+003A   2800           00202             GOTO        VERMELHO_DUTY_CYCLE_600
+003B   283E           00203             GOTO        VERMELHO_DUTY_CYCLE_60
+                      00204 
+Warning[207]: Found label after column 1. (VERMELHO_DUTY_CYCLE_5)
+003C                  00205         VERMELHO_DUTY_CYCLE_5
+003C   1505           00206             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+003D                  00207             ...DELAY_95
+                      00208 
+Warning[207]: Found label after column 1. (VERMELHO_DUTY_CYCLE_20)
+003D                  00209         VERMELHO_DUTY_CYCLE_20
+003D   1505           00210             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+003E                  00211             ...DELAY_95
+                      00212 
+Warning[207]: Found label after column 1. (VERMELHO_DUTY_CYCLE_60)
+003E                  00213         VERMELHO_DUTY_CYCLE_60
+003E   1505           00214             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+003F                  00215             ...DELAY_95
+                      00216 
+Warning[207]: Found label after column 1. (VERMELHO_DUTY_CYCLE_100)
+003F                  00217         VERMELHO_DUTY_CYCLE_100
+003F   1505           00218             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+0040                  00219             ...DELAY_95
+                      00220 
+Warning[207]: Found label after column 1. (VERDE_AZUL)
+0040                  00221     VERDE_AZUL
+0040   1805           00222         BTFSC   GPIO,GP0
+0041   2843           00223         GOTO    AZUL
+0042   2851           00224         GOTO    VERDE
+                      00225         
+                      00226         
+                      00227         
+                      00228         
+Warning[207]: Found label after column 1. (AZUL)
+0043                  00229     AZUL
+0043   1985           00230             BTFSC       GPIO,GP3
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0044   2829           00231             GOTO        ESCOLHA_LED
+0045   1885           00232             BTFSC       GPIO,GP1
+0046   284A           00233             GOTO        AZUL_SESSENTA_CEM
+0047   1805           00234             BTFSC       GPIO,GP0
+0048   284E           00235             GOTO        AZUL_DUTY_CYCLE_20
+0049   284D           00236             GOTO        AZUL_DUTY_CYCLE_5
+                      00237 
+Warning[207]: Found label after column 1. (AZUL_SESSENTA_CEM)
+004A                  00238         AZUL_SESSENTA_CEM    
+004A   1805           00239             BTFSC       GPIO,GP0
+Error[113]  : Symbol not previously defined (AZUL_DUTY_CYCLE_600)
+004B   2800           00240             GOTO        AZUL_DUTY_CYCLE_600
+004C   284F           00241             GOTO        AZUL_DUTY_CYCLE_60
+                      00242 
+Warning[207]: Found label after column 1. (AZUL_DUTY_CYCLE_5)
+004D                  00243         AZUL_DUTY_CYCLE_5
+004D   1505           00244             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+004E                  00245             ...DELAY_95
+                      00246 
+Warning[207]: Found label after column 1. (AZUL_DUTY_CYCLE_20)
+004E                  00247         AZUL_DUTY_CYCLE_20
+004E   1505           00248             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+004F                  00249             ...DELAY_95
+                      00250 
+Warning[207]: Found label after column 1. (AZUL_DUTY_CYCLE_60)
+004F                  00251         AZUL_DUTY_CYCLE_60
+004F   1505           00252             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+0050                  00253             ...DELAY_95
+                      00254 
+Warning[207]: Found label after column 1. (AZUL_DUTY_CYCLE_100)
+0050                  00255         AZUL_DUTY_CYCLE_100
+0050   1505           00256             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+0051                  00257             ...DELAY_95
+                      00258         
+                      00259         
+                      00260         
+                      00261         
+Warning[207]: Found label after column 1. (VERDE)
+0051                  00262     VERDE
+0051   1985           00263             BTFSC       GPIO,GP3
+0052   2829           00264             GOTO        ESCOLHA_LED
+0053   1885           00265             BTFSC       GPIO,GP1
+0054   2858           00266             GOTO        VERDE_SESSENTA_CEM
+0055   1805           00267             BTFSC       GPIO,GP0
+0056   285C           00268             GOTO        VERDE_DUTY_CYCLE_20
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0057   285B           00269             GOTO        VERDE_DUTY_CYCLE_5
+                      00270 
+Warning[207]: Found label after column 1. (VERDE_SESSENTA_CEM)
+0058                  00271         VERDE_SESSENTA_CEM    
+0058   1805           00272             BTFSC       GPIO,GP0
+Error[113]  : Symbol not previously defined (VERDE_DUTY_CYCLE_600)
+0059   2800           00273             GOTO        VERDE_DUTY_CYCLE_600
+005A   285D           00274             GOTO        VERDE_DUTY_CYCLE_60
+                      00275 
+Warning[207]: Found label after column 1. (VERDE_DUTY_CYCLE_5)
+005B                  00276         VERDE_DUTY_CYCLE_5
+005B   1505           00277             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+005C                  00278             ...DELAY_95
+                      00279 
+Warning[207]: Found label after column 1. (VERDE_DUTY_CYCLE_20)
+005C                  00280         VERDE_DUTY_CYCLE_20
+005C   1505           00281             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+005D                  00282             ...DELAY_95
+                      00283 
+Warning[207]: Found label after column 1. (VERDE_DUTY_CYCLE_60)
+005D                  00284         VERDE_DUTY_CYCLE_60
+005D   1505           00285             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+005E                  00286             ...DELAY_95
+                      00287 
+Warning[207]: Found label after column 1. (VERDE_DUTY_CYCLE_100)
+005E                  00288         VERDE_DUTY_CYCLE_100
+005E   1505           00289             BSF GPIO,GP2
+Warning[207]: Found label after column 1. (...DELAY_95)
+Error[116]  : Address label duplicated or different in second pass (...DELAY_95)
+005F                  00290             ...DELAY_95 
+                      00291 
+                      00292     
+005F   2818           00293     GOTO    MAIN
+                      00294 
+                      00295 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00296 ;*                       FIM DO PROGRAMA                           *
+                      00297 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00298 
+                      00299         END
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+...DELAY_95                       0000003D
+ADCON0                            0000001F
+ADCS0                             00000004
+ADCS1                             00000005
+ADCS2                             00000006
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANS0                              00000000
+ANS1                              00000001
+ANS2                              00000002
+ANS3                              00000003
+ANSEL                             0000009F
+AZUL                              00000043
+AZUL_DUTY_CYCLE_100               00000050
+AZUL_DUTY_CYCLE_20                0000004E
+AZUL_DUTY_CYCLE_5                 0000004D
+AZUL_DUTY_CYCLE_60                0000004F
+AZUL_SESSENTA_CEM                 0000004A
+BANK0                             BCF STATUS,RP0
+BANK1                             BSF STATUS,RP0
+C                                 00000000
+CAL0                              00000002
+CAL1                              00000003
+CAL2                              00000004
+CAL3                              00000005
+CAL4                              00000006
+CAL5                              00000007
+CHS0                              00000002
+CHS1                              00000003
+CINV                              00000004
+CIS                               00000003
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             00000019
+CMIE                              00000003
+CMIF                              00000003
+CONT_DELAY_40                     00000024
+CONT_DELAY_60                     00000023
+CONT_DELAY_95                     00000022
+COUT                              00000006
+DC                                00000001
+DELAY_5_INICIAL                   00000020
+DELAY_95_INICIAL                  00000026
+DESLIGA_LEDS                      0000002E
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDAT                             0000009A
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+ESCOLHA_LED                       00000029
+F                                 00000001
+FSR                               00000004
+GIE                               00000007
+GO                                00000001
+GO_DONE                           00000001
+GO_NOT_DONE                       00000001
+GP0                               00000000
+GP1                               00000001
+GP2                               00000002
+GP3                               00000003
+GP4                               00000004
+GP5                               00000005
+GPIE                              00000003
+GPIF                              00000000
+GPIO                              00000005
+GPIO0                             00000000
+GPIO1                             00000001
+GPIO2                             00000002
+GPIO3                             00000003
+GPIO4                             00000004
+GPIO5                             00000005
+INDF                              00000000
+INICIO                            0000000D
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOC                               00000096
+IOC0                              00000000
+IOC1                              00000001
+IOC2                              00000002
+IOC3                              00000003
+IOC4                              00000004
+IOC5                              00000005
+IOCB                              00000096
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
+IOCB3                             00000003
+IOCB4                             00000004
+IOCB5                             00000005
+IRP                               00000007
+MAIN                              00000018
+NOT_BOD                           00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000001
+NOT_GPPU                          00000007
+NOT_PD                            00000003
+NOT_POR                           00000001
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+OPTION_REG                        00000081
+OSCCAL                            00000090
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+SAI_INT                           00000007
+STATUS                            00000003
+STATUS_TEMP                       00000021
+SUBROTINA1                        0000000C
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1IE                              00000000
+T1IF                              00000000
+T1OSCEN                           00000003
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1GE                            00000006
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TRISIO                            00000085
+TRISIO0                           00000000
+TRISIO1                           00000001
+TRISIO2                           00000002
+TRISIO3                           00000003
+TRISIO4                           00000004
+TRISIO5                           00000005
+VCFG                              00000006
+VERDE                             00000051
+VERDE_AZUL                        00000040
+VERDE_DUTY_CYCLE_100              0000005E
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+VERDE_DUTY_CYCLE_20               0000005C
+VERDE_DUTY_CYCLE_5                0000005B
+VERDE_DUTY_CYCLE_60               0000005D
+VERDE_SESSENTA_CEM                00000058
+VERMELHO                          00000032
+VERMELHO_DUTY_CYCLE_100           0000003F
+VERMELHO_DUTY_CYCLE_20            0000003D
+VERMELHO_DUTY_CYCLE_5             0000003C
+VERMELHO_DUTY_CYCLE_60            0000003E
+VERMELHO_SESSENTA_CEM             00000039
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             00000099
+VREN                              00000007
+VRR                               00000005
+W                                 00000000
+WPU                               00000095
+WPU0                              00000000
+WPU1                              00000001
+WPU2                              00000002
+WPU4                              00000004
+WPU5                              00000005
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+W_TEMP                            00000020
+Z                                 00000002
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_OFF                           00003FFF
+_CP_ON                            00003F7F
+_DEVID1                           00002006
+_EC_OSC                           00003FFB
+_EXTRC_OSC_CLKOUT                 00003FFF
+_EXTRC_OSC_NOCLKOUT               00003FFE
+_FOSC_EC                          00003FFB
+_FOSC_EXTRCCLK                    00003FFF
+_FOSC_EXTRCIO                     00003FFE
+_FOSC_HS                          00003FFA
+_FOSC_INTRCCLK                    00003FFD
+_FOSC_INTRCIO                     00003FFC
+_FOSC_LP                          00003FF8
+_FOSC_XT                          00003FF9
+_HS_OSC                           00003FFA
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   7-12-2019  13:43:42         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FF8
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FEF
+_WDTE_OFF                         00003FF7
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FF7
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FF9
+__12F675                          00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : X---XXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX ---------------- ----------------
+2000 : -------X-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    93
+Program Memory Words Free:   931
+
+
+Errors   :    15
+Warnings :    35 reported,     0 suppressed
+Messages :     4 reported,     0 suppressed
+
+

@@ -1,0 +1,123 @@
+opengl -> capítulo 8 e 9 do livro "Livro de Computação Gráfica (OPEN GL - Uma abordagem prática e objetiva)", "opengl - redbook", "opengl_resumo" e "glut_openGL"
+
+opengl -> API com comandos usados para especificar objetos e operações necessárias para produzir aplicativos
+gráficos 2D e 3D. A Opengl não inclui comandos de tratamento de janelas ou interação com o usuário. Independente de hardware.
+
+glu -> (Opengl utitily library) biblioteca  utilizada para facilitar o uso de algumas funcionalidades da OpenGL. Biblioteca de utilitários
+da Opengl. A GLU oferece diversas facilidades na definição de objetos tridimensionais, como superfícies quadráticas ou curvas, e 
+superfícies com NURBS (non uniform rational B-splines)
+
+glut -> Opengl utility toolkit) biblioteca  utilizada para facilitar o uso de algumas funcionalidades da OpenGL. Conjunto de ferramentas
+para desenvolvimento de programas baseados em opengl. Oferece meios de lidar com janelas gráficas e interações realizadas pelo usuários.
+A glut é independente do sistema gráfico utilizado e por isso, permite a criação de aplicações que podem ser compiladas e exeutadas
+em qualquer sistema de janelas.
+
+
+ler -> capítulo 1 red book; capítulo 3 (3.5 a 3.9) Hearn and Baker; capítulo de qualquer livro de cg que fale de transformações;
+red book paginas da 5 a 25 (capítulo 1 já falado e mais 2 páginas); leitura de projeções geométricas de qualquer livro de cg páginas
+da 123 a 140 do redbook; exibição com opengl redbook páginas 129 a 131; (da PR2 até o 23)
+
+projeção -> obter representações bidimensionais de objetos tridimensionais para serem exibidas em um monitor. Usar o parâmetro "GL_PROJECTION" em glMatrixMode
+
+transformações -> Usar o parâmetro "GL_MODELVIEW" em glMatrixMode. Sempre seguir com o glLoadIdentity() para carregar a matriz de transformação atual.
+
+quando chega na função construída para desenhar, usa esta sequência de código na função: 
+
+glMatrixMode(x); // onde x é MODELVIEW (para selecionar a matriz do modelo (matriz do objeto ou cena), ou seja, as operações que vão ser realizadas serão sobre o objeto ou ceja), PROJECTION (para selecionar a matriz de projeção), etc.
+//todas as operações (translação, rotação, escala) a partir daqui, vão afetar a matriz selecionada (seja matriz do modelo, matriz de projeção, etc).
+
+glLoadIdentity(); // função utilizada para inicializar o sistema de coordenadas antes da execução de qualquer operação de manipulação de matrizes. Faz com que seja carregada a matriz identidade.
+glClear(GL_COLOR_BUFFER_BIT);
+
+glTransleted(x,y,z)/glRotated(ângulo,x,y,z)/glScaled(x,y,z); // x, y e z são os valores referentes às transformações em cada x, y e z respectivamente. Para a rotação indicamos o ângulo que queremos rotacionar e o eixo ao redor do qual queremos rotacionar. Para trabalhar em 2D a rotação deve ser feita sempre em torno do eixo z. O eixo z é perpendicular à tela, está apontando para fora da dela. Se o ângulo passado para o rotate for positivo, a rotação será feita no sentido anti-horário.
+
+Lembrando que a ordem dessas transformçaões importa, caso haja mais de uma transformação sobre o mesmo objeto. Se houver mais de uma transformação para ser aplicada ao mesmo objeto, podemos chamar cada transformação nesse mesmo trecho do código (após glLoadIdentity(); ou melhor, depois de glClear(GL_COLOR_BUFFER_BIT), fazendo uma chamada embaixo da outra. (Observar a ordem das transformações, ou seja, das chamadas de transformações).
+obs.: se o objeto a ser desenhado for 2D então na transformação de translação o terceiro argumento deve ser "0" pois a translação é uma soma das coordenadas atuais com as novas. 
+x' = x + Tx
+y' = y + Ty
+
+Já na escala o terceiro argumento deve ser 1 pois a escala é a multiplicação das coordenadas atuais com as novas.
+Na escala para diminuir um objeto basta passar um valor entre 0.0 e 1.0 e para aumentar o valor deve ser maior que 1.0. Caso o fator de escala seja negaivo, o objeto terá os sinais de suas coordenadas invertidos e a imagem será espelhada naquele eixo que teve fator de escala negativo.
+x' = x*Ex
+y' = y*Ey
+
+Para a rotação é aplicada uma composição de cálculos de seno e cosseno em todas as coordenadas das primitivas gráficas que compõem o objeto ou cena. 
+x' = xcos(a) + ysen(a)
+y' = xsen(a) + ycos(a)
+
+
+// aqui segue normalmente o código
+glColor3f(r,g,b);
+glBegin(x);
+   glVertex2f/3f(x,y ou x,y,z);
+   ...
+   glVertex2f/3f(x,y ou x,y,z); 
+
+// se antes estávamos desenhando uma primitiva, por exemplo um quadrado, e queremos fazer outro desenho mas sendo a mesma primitiva, ou seja, outro quadrado e que seja da mesma cor do anterior, mudando apenas sua posição, ou seja, suas coordenadas, podemos continuar aqui dentro do mesmo glBegin(x)/gEnd() e colocando as novas coordenadas desejadas no glVertex2f/3f(x,y ou x,y,z);
+
+glEnd();
+//glFlush(); se não há nada mais a ser desenhado e chegamos no fim usa o "glFlush();" mas caso haja continuação, deixa esse comando para o fim
+
+// se precisarmos mudar a primitiva do desenho, por exemplo estávamos desenhando um quadrado e agora queremos um triângulo, ou se ainda vamos desenhar um quadrado mas queremos que o mesmo seja de outra cor, então repetimos o trecho de código acima referente à cor e repetimos também glBegin(x)/glEnd() com os novos glVertex e desenhamos o novo objeto.
+
+// aqui é a nova cor, para que seja desenhado o mesmo objeto em outra cor ou para desenharmos uma nova primitiva do objeto
+glColor3f(r,g,b);
+glBegin(x);
+   glVertex2f/3f(x,y ou x,y,z);
+   ...
+   glVertex2f/3f(x,y ou x,y,z); 
+glEnd();
+
+glFlush():
+
+// Assim podemos desenhar várias primitivas para termos ao final um objeto. Por exemplo, alguns quadrados e um triângulo podem formar uma casa.
+// No momento de aplicar as transformações é preciso especificar qual matriz será utilizada. Então é necessária a utilização de glMatrixMode(x) e glMatrizIdentity();
+
+Portanto transformações nada mais são do que operações matemáticas de soma e multiplicação em todas as coordenadas que compõem os objetos.
+
+Dependendo do que se deseja, a translação deve ser feita antes ou depois das demais operações (pois ela usa soma enquanto as demais usa multiplicação, e soma e multiplicação não são comutativas).
+O OpenGl aplica as transformações na origem do sistema de referência, portanto é aconselhável que função de translação seja a primeira a ser chamada.
+
+Fazer os exemplos da casa feitos no livro "opengl uma abordagem prática e objetiva". Entre as pgs 115 até 128 tem os códigos usando translação, rotação e escala e tudo junto, inclusive alterando a ordem da chamada das funções para se ver a diferença no resultado final.
+
+Quando se tem dois ou mais objetos e se quer fazer uma transformação em apenas 1, não podemos aplicar a transformação e depois desenhar se não a transformação atingirá os outros objetos também. Nesse caso usamos implementação de uma pilha de matrizes de transformação para definir o escopo das transformações. 
+
+rotate não mantém as proporções de escala de x e y que o objeto tinha ANTES mas mantém a largura e a altura da tela que o objeto ocupava antes, então ele pode ficar mais achatado ou esticado qnd rotacionar. Uma escala aqui aumentando o tamanho em x por exemplo, deixa o eixo x da tela aumentado, entao mesmo se fizer uma rotação no objeto, a parte x da TELA (e nao do objeto) continuará aumentada. Com y acontece de forma análoga.
+
+ja escala dada depois do rotate funciona normalmente porém o eixo x do objeto é o mesmo eixo que era antes de ser rotacionado. Então aqui por exemplo em uma rotação de 90, o eixo x fica sendo o y da tela (que corresponde ao eixo x do objeto antes da rotação). Uma escala aqui aumentando o tamanho em x por exemplo, deixa o x do objeto (x inicial antes da rotação) aumentado. Com y acontece de forma análoga.
+
+É aconselhável que a transformação de translação seja a PRIMEIRA a ser chamada, mas isso não é uma regra é só para ajudar a evitar possíveis confusões.
+
+Só usar o glMatrixMode(x) quando for mudar de um modo para outro. Por exemplo, se estiver trabalhando no OBJETO/CENA e precisar mudar para trabalhar com PROJEÇÃO, do modo modelo (modelview) para projeção (projeção), ou seja, se precisar mudar de qualquer modo de matriz para qualquer outro modo de matriz.
+
+A maneira de aplicar transformações geométricas em 3D é praticamente igual à aplicar em 2D, sendo que são empregados valores para escala e translação em z e a rotação pode ser feita ao redor de qualquer eixo.
+
+Obs.: glClearColor() possui 4 parâmetros. Os 3 primeiros é referente ao rgb e o quarto eu não sei. Serve para limpar a tela colocando uma cor de fundo definida aqui. Já glColor3f() possui três parâmetros referentes à rgb. Serve para fazer o desenho com a cor selecionada aqui.
+
+Usar o GL_PROJECTION em uma função void init() conforme está nos exemplos de transformações. Fazendo isso, para dar translação por exemplo, você não usa escala do tipo 0.2, você usa escala do tipo 15 para conseguir os efeitos. Isso é detalhe, mas é bom padronizar e usar na função void init() o GL_PROJECION assim como glOrtho e os outros comandos que tem nessa função que pode ser visto, como dito, nos exemplos de transformações.
+
+parei no final da página 131 depois do desenho da casa usando pilha de matrizes de transformação (página 66 do leitor de pdf) do livro "Opengl - Uma abordagem prática e objetiva".
+
+
+segunda prova - modelagem até viewport: modelagem, rasterização, interação, transformação.
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

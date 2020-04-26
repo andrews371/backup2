@@ -1,0 +1,5 @@
+Para ligar a iluminação digite 'l' ou 'L'
+Para desligar a iluminação digite 'l' ou 'L'
+Para ligar a iluminação azul digite '1'
+Para ligar a iluminação vermelha digite '2'
+Para desligar as iluminações digite '0'

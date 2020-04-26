@@ -1,0 +1,698 @@
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00002 ;*              MODIFICAÇÕES PARA USO COM 12F675                   *
+                      00003 ;*                FEITAS PELO PROF. MARDSON                        *
+                      00004 ;*                      JUNHO DE 2019                              *
+                      00005 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00006 
+                      00007 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00008 ;*                       ATIVIDADE 7                               *
+                      00009 ;*             ANDRE OLIVEIRA DE SOUSA - 11325684                  *
+                      00010 ;*         DESENVOLVIDO PELA MOSAICO ENGENHARIA E CONSULTORIA      *
+                      00011 ;*   VERSÃO: 1.0                           DATA: 17/06/03          *
+                      00012 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00013 ;*                     DESCRIÇÃO DO ARQUIVO                        *
+                      00014 ;*-----------------------------------------------------------------*
+                      00015 ;*   MODELO PARA O PIC 12F675                                      *
+                      00016 ;*                                                                 *
+                      00017 ;*                                                                 *
+                      00018 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00019 
+                      00020 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00021 ;*                     ARQUIVOS DE DEFINIÇÕES                      *
+                      00022 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00023 #INCLUDE <p12f675.inc>  ;ARQUIVO PADRÃO MICROCHIP PARA 12F675
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Mar 17 2019
+                      00005 ;  MPASM PIC12F675 processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2019 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00367         LIST
+                      00024 
+2007   3F84           00025         __CONFIG _BODEN_OFF & _CP_OFF & _PWRTE_ON & _WDT_OFF & _MCLRE_OFF & _INTRC_OSC_NOCLKOUT
+                      00026 
+                      00027 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00028 ;*                    PAGINAÇÃO DE MEMÓRIA                         *
+                      00029 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00030 ;DEFINIÇÃO DE COMANDOS DE USUÁRIO PARA ALTERAÇÃO DA PÁGINA DE MEMÓRIA
+                      00031 #DEFINE BANK0   BCF STATUS,RP0  ;SETA BANK 0 DE MEMÓRIA
+                      00032 #DEFINE BANK1   BSF STATUS,RP0  ;SETA BANK 1 DE MAMÓRIA
+                      00033 
+                      00034 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00035 ;*                         VARIÁVEIS                               *
+                      00036 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00037 ; DEFINIÇÃO DOS NOMES E ENDEREÇOS DE TODAS AS VARIÁVEIS UTILIZADAS 
+                      00038 ; PELO SISTEMA
+                      00039 
+                      00040         CBLOCK  0x20    ;ENDEREÇO INICIAL DA MEMÓRIA DE
+                      00041                                         ;USUÁRIO
+  00000020            00042                 W_TEMP          ;REGISTRADORES TEMPORÁRIOS PARA USO
+  00000021            00043                 STATUS_TEMP     ;JUNTO ÀS INTERRUPÇÕES
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00044 
+                      00045                 ;NOVAS VARIÁVEIS
+  00000022            00046                 CONTL
+  00000023            00047                 CONTH
+  00000024            00048                 CONT
+  00000025            00049                 DISTANCIA_ENCONTRADA
+                      00050 
+                      00051         ENDC                    ;FIM DO BLOCO DE MEMÓRIA
+                      00052 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00053 ;*                        FLAGS INTERNOS                           *
+                      00054 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00055 ; DEFINIÇÃO DE TODOS OS FLAGS UTILIZADOS PELO SISTEMA
+                      00056 
+                      00057 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00058 ;*                         CONSTANTES                              *
+                      00059 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00060 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
+                      00061 
+                      00062 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00063 ;*                           ENTRADAS                              *
+                      00064 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00065 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO ENTRADA
+                      00066 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00067 
+                      00068 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00069 ;*                           SAÍDAS                                *
+                      00070 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00071 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO SAÍDA
+                      00072 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00073 
+                      00074 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00075 ;*                       VETOR DE RESET                            *
+                      00076 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00077 
+                      00078         ORG     0x00                    ;ENDEREÇO INICIAL DE PROCESSAMENTO
+0000   2???           00079         GOTO    INICIO
+                      00080         
+                      00081 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00082 ;*                    INÍCIO DA INTERRUPÇÃO                        *
+                      00083 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00084 ; ENDEREÇO DE DESVIO DAS INTERRUPÇÕES. A PRIMEIRA TAREFA É SALVAR OS
+                      00085 ; VALORES DE "W" E "STATUS" PARA RECUPERAÇÃO FUTURA
+                      00086 
+                      00087         ORG     0x04                    ;ENDEREÇO INICIAL DA INTERRUPÇÃO
+0004   00A0           00088         MOVWF   W_TEMP          ;COPIA W PARA W_TEMP
+0005   0E03           00089         SWAPF   STATUS,W
+0006   00A1           00090         MOVWF   STATUS_TEMP     ;COPIA STATUS PARA STATUS_TEMP
+                      00091 
+                      00092 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00093 ;*                    ROTINA DE INTERRUPÇÃO                        *
+                      00094 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00095 ; AQUI SERÃO ESCRITAS AS ROTINAS DE RECONHECIMENTO E TRATAMENTO DAS
+                      00096 ; INTERRUPÇÕES
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00097 
+                      00098 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00099 ;*                 ROTINA DE SAÍDA DA INTERRUPÇÃO                  *
+                      00100 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00101 ; OS VALORES DE "W" E "STATUS" DEVEM SER RECUPERADOS ANTES DE 
+                      00102 ; RETORNAR DA INTERRUPÇÃO
+                      00103 
+0007                  00104 SAI_INT
+0007   0E21           00105         SWAPF   STATUS_TEMP,W
+0008   0083           00106         MOVWF   STATUS          ;MOVE STATUS_TEMP PARA STATUS
+0009   0EA0           00107         SWAPF   W_TEMP,F
+000A   0E20           00108         SWAPF   W_TEMP,W        ;MOVE W_TEMP PARA W
+000B   0009           00109         RETFIE
+                      00110 
+                      00111 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00112 ;*                       ROTINAS E SUBROTINAS                      *
+                      00113 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00114 ; CADA ROTINA OU SUBROTINA DEVE POSSUIR A DESCRIÇÃO DE FUNCIONAMENTO
+                      00115 ; E UM NOME COERENTE ÀS SUAS FUNÇÕES.
+                      00116 
+000C                  00117 SUBROTINA1
+                      00118 
+                      00119         ;CORPO DA ROTINA
+                      00120 
+000C   0008           00121         RETURN
+                      00122 
+                      00123 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00124 ;*                     INICIO DO PROGRAMA                          *
+                      00125 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00126         
+000D                  00127 INICIO
+000D   1683           00128         BANK1                           ;ALTERA PARA O BANCO 1
+000E   3008           00129         MOVLW   B'00001000' ;CONFIGURA TODAS AS PORTAS DO GPIO (PINOS)
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000F   0085           00130         MOVWF   TRISIO          ;COMO SAÍDAS
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0010   019F           00131         CLRF    ANSEL           ;DEFINE PORTAS COMO Digital I/O
+0011   3004           00132         MOVLW   B'00000100'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0012   0081           00133         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO
+0013   3000           00134         MOVLW   B'00000000'
+0014   008B           00135         MOVWF   INTCON          ;DEFINE OPÇÕES DE INTERRUPÇÕES
+0015   1283           00136         BANK0                           ;RETORNA PARA O BANCO
+0016   3000           00137         MOVLW   B'00000000'
+0017   0090           00138         MOVWF   T1CON
+0018   3007           00139         MOVLW   B'00000111'
+0019   0099           00140         MOVWF   CMCON           ;DEFINE O MODO DE OPERAÇÃO DO COMPARADOR ANALÓGICO
+                      00141 
+                      00142 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00143 ;*                     INICIALIZAÇÃO DAS VARIÁVEIS                 *
+                      00144 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00145 
+                      00146 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00147 ;*                     ROTINA PRINCIPAL                            *
+                      00148 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+001A                  00149 MAIN
+                      00150         ;CORPO DA ROTINA PRINCIPAL
+001A   1085           00151         BCF     GPIO,GP1
+001B   1105           00152         BCF     GPIO,GP2
+001C   1205           00153         BCF     GPIO,GP4
+001D   1285           00154         BCF     GPIO,GP5
+                      00155         
+001E                  00156 COMECO  
+001E   3000           00157         MOVLW   .0
+001F   00A5           00158         MOVWF   DISTANCIA_ENCONTRADA ;FLAG PARA SINALIZAR QUE ENCONTROU UMA DISTÂNCIA
+0020   3002           00159         MOVLW   .2
+0021   00A4           00160         MOVWF   CONT            ;CONTADOR USADO POR TMR0
+0022   018F           00161         CLRF    TMR1H           ; ZERA OS TMR1H:TMR1L
+0023   018E           00162         CLRF    TMR1L           
+0024   3000           00163         MOVLW   B'00000000'             
+0025   008F           00164         MOVWF   TMR1H           
+0026   3000           00165         MOVLW   B'00000000'     
+0027   008E           00166         MOVWF   TMR1L
+0028   1005           00167         BCF     GPIO,GP0
+0029   1185           00168         BCF     GPIO,GP3
+                      00169         
+                      00170         ;PULSO PARA ACIONAR O ULTRASSON
+002A   1405           00171         BSF     GPIO,GP0
+002B   2???           00172         CALL    DELAY_10US
+002C   1005           00173         BCF     GPIO,GP0
+                      00174         
+                      00175         ;TESTE DA RESPOSTA DO ULTRASSON
+002D                  00176 TESTE_INICIAL_GP3
+002D   1985           00177         BTFSC   GPIO,GP3            ;VERIFICA SE GP3 RECEBEU A RESPOSTA
+002E   2???           00178         GOTO    TEMPO_RESPOSTA      ;SE GP3 FOR 1, RECEBEU A RESPOSTA
+002F   2???           00179         GOTO    TESTE_INICIAL_GP3   ;SE GP3 FOR 0, AINDA NÃO RECEBEU A RESPOSTA
+                      00180 
+                      00181         ;VERIFICA POR QUANTO TEMPO O GP3 PERMANECEU EM NÍVEL LÓGICO ALTO
+0030                  00182 TEMPO_RESPOSTA
+                      00183         ;INICIA CONTADOR                
+0030   1410           00184         BSF     T1CON,TMR1ON        ;INICIA A CONTAGEM DE TEMPO         
+0031   1985           00185         BTFSC   GPIO,GP3
+0032   2???           00186         GOTO    $ - 1
+0033   1010           00187         BCF     T1CON,TMR1ON        ;PÁRA A CONTAGEM DE TEMPO
+                      00188         
+                      00189         ;REFERENCIA DE TEMPO PARA DISTÂNCIA DE 5 CM
+                      00190         ;VERIFICAR SE SE É MENOR QUE 5 CM
+0034   3001           00191         MOVLW   B'00000001'
+0035   00A3           00192         MOVWF   CONTH
+0036   3022           00193         MOVLW   B'00100010'
+0037   00A2           00194         MOVWF   CONTL
+0038   2???           00195         CALL    VERIFICAR_DISTANCIA ;QUANDO GP3 FOR 0 JA TEMOS O TEMPO PARA CALCULAR A DISTÂNCIA
+0039   1825           00196         BTFSC   DISTANCIA_ENCONTRADA,0
+003A   2???           00197         GOTO    MENOR5
+                      00198         
+                      00199         ;REFERENCIA DE TEMPO PARA DISTÂNCIA DE 10 CM
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00200         ;VERIFICAR SE É MAIOR OU IGUAL A 5 E MENOR QUE 10 CM
+003B   3002           00201         MOVLW   B'00000010'
+003C   00A3           00202         MOVWF   CONTH
+003D   3044           00203         MOVLW   B'01000100'
+003E   00A2           00204         MOVWF   CONTL
+003F   2???           00205         CALL    VERIFICAR_DISTANCIA
+0040   1825           00206         BTFSC   DISTANCIA_ENCONTRADA,0
+0041   2???           00207         GOTO    IGUAL5
+                      00208         
+                      00209         ;REFERENCIA DE TEMPO PARA DISTÂNCIA DE 15 CM
+                      00210         ;VERIFICAR SE É MAIOR OU IGUAL A 10 E MENOR QUE 15 CM
+0042   3003           00211         MOVLW   B'00000011'
+0043   00A3           00212         MOVWF   CONTH
+0044   3066           00213         MOVLW   B'01100110'
+0045   00A2           00214         MOVWF   CONTL
+0046   2???           00215         CALL    VERIFICAR_DISTANCIA ;QUANDO GP3 FOR 0 JA TEMOS O TEMPO PARA CALCULAR A DISTÂNCIA
+0047   1825           00216         BTFSC   DISTANCIA_ENCONTRADA,0
+0048   2???           00217         GOTO    IGUAL10
+                      00218         
+                      00219         ;REFERENCIA DE TEMPO PARA DISTÂNCIA DE 20 CM
+                      00220         ;VERIFICAR SE É MAIOR OU IGUAL A 15 E MENOR QUE 20
+0049   3004           00221         MOVLW   B'00000100'
+004A   00A3           00222         MOVWF   CONTH
+004B   3088           00223         MOVLW   B'10001000'
+004C   00A2           00224         MOVWF   CONTL
+004D   2???           00225         CALL    VERIFICAR_DISTANCIA ;QUANDO GP3 FOR 0 JA TEMOS O TEMPO PARA CALCULAR A DISTÂNCIA
+004E   1825           00226         BTFSC   DISTANCIA_ENCONTRADA,0
+004F   2???           00227         GOTO    IGUAL15
+                      00228         
+                      00229         ;TESTANDO SE A DISTÂNCIA É 20 OU É MAIOR
+0050   1903           00230         BTFSC   STATUS,Z
+0051   2???           00231         GOTO    IGUAL20
+0052   2???           00232         GOTO    MAIOR20
+                      00233         
+0053                  00234 VERIFICAR_DISTANCIA     
+                      00235         ;TESTE DE DISTÂNCIA
+0053   0823           00236         MOVFW   CONTH
+0054   020F           00237         SUBWF   TMR1H,W
+0055   1803           00238         BTFSC   STATUS,C
+0056   2???           00239         GOTO    MAIOR_IGUAL
+0057   2???           00240         GOTO    MENOR
+                      00241 
+                      00242 ;TESTANDO BITS MAIS SIGNIFICATIVOS DO TIMER
+0058                  00243 MAIOR_IGUAL
+0058   1903           00244         BTFSC   STATUS,Z
+0059   2???           00245         GOTO    TESTA_LOW   ;BITS MAIS SIGNIFICATIVOS DEU IGUAL, ENTAO TESTAMOS OS MENOS SIGNIFICATIVOS
+005A   2???           00246         GOTO    MAIOR   
+                      00247 
+005B                  00248 MAIOR
+005B   0008           00249         RETURN
+                      00250         
+005C                  00251 MENOR   
+005C   3001           00252         MOVLW   .1
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+005D   00A5           00253         MOVWF   DISTANCIA_ENCONTRADA
+005E   0008           00254         RETURN
+                      00255         
+                      00256 ;TESTANDO BITS MENOS SIGNIFICATIVOS DO TIMER
+005F                  00257 TESTA_LOW
+005F   0822           00258         MOVFW   CONTL
+0060   020E           00259         SUBWF   TMR1L,W
+0061   1803           00260         BTFSC   STATUS,C
+0062   2???           00261         GOTO    MAIOR_IGUAL_L
+0063   2???           00262         GOTO    MENOR_L
+                      00263         
+0064                  00264 MAIOR_IGUAL_L
+0064   0008           00265         RETURN
+                      00266         
+0065                  00267 MENOR_L 
+0065   3001           00268         MOVLW   .1
+0066   00A5           00269         MOVWF   DISTANCIA_ENCONTRADA
+0067   0008           00270         RETURN
+                      00271         
+                      00272         
+                      00273         
+0068                  00274 MENOR5  
+0068   1085           00275         BCF     GPIO,GP1
+0069   1105           00276         BCF     GPIO,GP2
+006A   1205           00277         BCF     GPIO,GP4
+006B   1285           00278         BCF     GPIO,GP5
+006C   2???           00279         GOTO    DELAY_60
+                      00280         
+006D                  00281 IGUAL5
+006D   1485           00282         BSF     GPIO,GP1
+006E   1105           00283         BCF     GPIO,GP2
+006F   1205           00284         BCF     GPIO,GP4
+0070   1285           00285         BCF     GPIO,GP5
+0071   2???           00286         GOTO    DELAY_60
+                      00287         
+0072                  00288 IGUAL10
+0072   1485           00289         BSF     GPIO,GP1
+0073   1505           00290         BSF     GPIO,GP2
+0074   1205           00291         BCF     GPIO,GP4
+0075   1285           00292         BCF     GPIO,GP5
+0076   2???           00293         GOTO    DELAY_60
+                      00294         
+0077                  00295 IGUAL15
+0077   1485           00296         BSF     GPIO,GP1
+0078   1505           00297         BSF     GPIO,GP2
+0079   1605           00298         BSF     GPIO,GP4
+007A   1285           00299         BCF     GPIO,GP5
+007B   2???           00300         GOTO    DELAY_60
+                      00301         
+007C                  00302 IGUAL20
+007C   1485           00303         BSF     GPIO,GP1
+007D   1505           00304         BSF     GPIO,GP2
+007E   1605           00305         BSF     GPIO,GP4
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+007F   1685           00306         BSF     GPIO,GP5
+0080   2???           00307         GOTO    DELAY_60
+                      00308         
+0081                  00309 MAIOR20
+                      00310         ;LEDS PISCANDO
+0081   1485           00311         BSF     GPIO,GP1
+0082   1505           00312         BSF     GPIO,GP2
+0083   1605           00313         BSF     GPIO,GP4
+0084   1685           00314         BSF     GPIO,GP5
+0085                  00315 DELAY_100
+                      00316         ;DELAY DE 100 MS PARA O OLHO HUMANO PODER ENXERGAR
+0085   1683           00317         BANK1
+0086   3007           00318         MOVLW   B'00000111'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0087   0081           00319         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO DO TMR0
+0088   1283           00320         BANK0
+0089   110B           00321         BCF     INTCON,T0IF
+008A   0181           00322         CLRF    TMR0
+008B   303C           00323         MOVLW   .60
+008C   0081           00324         MOVWF   TMR0
+008D   1D0B           00325         BTFSS   INTCON,T0IF
+008E   2???           00326         GOTO    $ - 1
+Message[305]: Using default destination of 1 (file).
+008F   0BA4           00327         DECFSZ  CONT
+0090   2???           00328         GOTO    DELAY_100
+                      00329         ;FIM DO DELAY
+                      00330         ;LEDS PISCANDO
+0091   1085           00331         BCF     GPIO,GP1
+0092   1105           00332         BCF     GPIO,GP2
+0093   1205           00333         BCF     GPIO,GP4
+0094   1285           00334         BCF     GPIO,GP5        
+                      00335 
+                      00336         
+                      00337         ;DELAY DE 60ms NECESSÁRIO PARA DAR OUTRO PULSO DE SAÍDA
+0095                  00338 DELAY_60
+0095   1683           00339         BANK1
+0096   3007           00340         MOVLW   B'00000111'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0097   0081           00341         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO DO TMR0
+0098   1283           00342         BANK0
+0099   110B           00343         BCF     INTCON,T0IF
+009A   0181           00344         CLRF    TMR0
+009B   300A           00345         MOVLW   .10
+009C   0081           00346         MOVWF   TMR0
+009D   1D0B           00347         BTFSS   INTCON,T0IF
+009E   2???           00348         GOTO    $ - 1
+                      00349         ;FIM DO DELAY
+                      00350         
+009F   2???           00351         GOTO    COMECO
+                      00352 
+00A0                  00353 DELAY_10US
+00A0   0000           00354         NOP
+00A1   0000           00355         NOP
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00A2   0000           00356         NOP
+00A3   0000           00357         NOP
+00A4   0000           00358         NOP
+00A5   0000           00359         NOP
+00A6   0000           00360         NOP
+00A7   0000           00361         NOP
+00A8   0000           00362         NOP
+00A9   0000           00363         NOP
+00AA   0008           00364         RETURN
+                      00365 
+                      00366 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00367 ;*                       FIM DO PROGRAMA                           *
+                      00368 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00369 
+3F84                  00370         END
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADCON0                            0000001F
+ADCS0                             00000004
+ADCS1                             00000005
+ADCS2                             00000006
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANS0                              00000000
+ANS1                              00000001
+ANS2                              00000002
+ANS3                              00000003
+ANSEL                             0000009F
+BANK0                             BCF STATUS,RP0
+BANK1                             BSF STATUS,RP0
+C                                 00000000
+CAL0                              00000002
+CAL1                              00000003
+CAL2                              00000004
+CAL3                              00000005
+CAL4                              00000006
+CAL5                              00000007
+CHS0                              00000002
+CHS1                              00000003
+CINV                              00000004
+CIS                               00000003
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             00000019
+CMIE                              00000003
+CMIF                              00000003
+COMECO                            0000001E
+CONT                              00000024
+CONTH                             00000023
+CONTL                             00000022
+COUT                              00000006
+DC                                00000001
+DELAY_100                         00000085
+DELAY_10US                        000000A0
+DELAY_60                          00000095
+DISTANCIA_ENCONTRADA              00000025
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDAT                             0000009A
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+F                                 00000001
+FSR                               00000004
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+GIE                               00000007
+GO                                00000001
+GO_DONE                           00000001
+GO_NOT_DONE                       00000001
+GP0                               00000000
+GP1                               00000001
+GP2                               00000002
+GP3                               00000003
+GP4                               00000004
+GP5                               00000005
+GPIE                              00000003
+GPIF                              00000000
+GPIO                              00000005
+GPIO0                             00000000
+GPIO1                             00000001
+GPIO2                             00000002
+GPIO3                             00000003
+GPIO4                             00000004
+GPIO5                             00000005
+IGUAL10                           00000072
+IGUAL15                           00000077
+IGUAL20                           0000007C
+IGUAL5                            0000006D
+INDF                              00000000
+INICIO                            0000000D
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOC                               00000096
+IOC0                              00000000
+IOC1                              00000001
+IOC2                              00000002
+IOC3                              00000003
+IOC4                              00000004
+IOC5                              00000005
+IOCB                              00000096
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
+IOCB3                             00000003
+IOCB4                             00000004
+IOCB5                             00000005
+IRP                               00000007
+MAIN                              0000001A
+MAIOR                             0000005B
+MAIOR20                           00000081
+MAIOR_IGUAL                       00000058
+MAIOR_IGUAL_L                     00000064
+MENOR                             0000005C
+MENOR5                            00000068
+MENOR_L                           00000065
+NOT_BOD                           00000000
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+NOT_BOR                           00000000
+NOT_DONE                          00000001
+NOT_GPPU                          00000007
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+OPTION_REG                        00000081
+OSCCAL                            00000090
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+SAI_INT                           00000007
+STATUS                            00000003
+STATUS_TEMP                       00000021
+SUBROTINA1                        0000000C
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1IE                              00000000
+T1IF                              00000000
+T1OSCEN                           00000003
+TEMPO_RESPOSTA                    00000030
+TESTA_LOW                         0000005F
+TESTE_INICIAL_GP3                 0000002D
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1GE                            00000006
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TRISIO                            00000085
+TRISIO0                           00000000
+TRISIO1                           00000001
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TRISIO2                           00000002
+TRISIO3                           00000003
+TRISIO4                           00000004
+TRISIO5                           00000005
+VCFG                              00000006
+VERIFICAR_DISTANCIA               00000053
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             00000099
+VREN                              00000007
+VRR                               00000005
+W                                 00000000
+WPU                               00000095
+WPU0                              00000000
+WPU1                              00000001
+WPU2                              00000002
+WPU4                              00000004
+WPU5                              00000005
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+W_TEMP                            00000020
+Z                                 00000002
+_.org_1_0032                      00000032
+_.org_1_008E                      0000008E
+_.org_1_009E                      0000009E
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_OFF                           00003FFF
+_CP_ON                            00003F7F
+_DEVID1                           00002006
+_EC_OSC                           00003FFB
+_EXTRC_OSC_CLKOUT                 00003FFF
+_EXTRC_OSC_NOCLKOUT               00003FFE
+_FOSC_EC                          00003FFB
+_FOSC_EXTRCCLK                    00003FFF
+_FOSC_EXTRCIO                     00003FFE
+_FOSC_HS                          00003FFA
+_FOSC_INTRCCLK                    00003FFD
+_FOSC_INTRCIO                     00003FFC
+_FOSC_LP                          00003FF8
+_FOSC_XT                          00003FF9
+_HS_OSC                           00003FFA
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-19-2019  11:31:57         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_IDLOC3                           00002003
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FF8
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FEF
+_WDTE_OFF                         00003FF7
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FF7
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FF9
+__12F675                          00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     6 reported,     0 suppressed
+
+

@@ -1,0 +1,80 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Thu Jul  4 16:43:08 2019
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000000
+                   .org_1       code   0x000000    program   0x000002
+                   .org_2       code   0x000004    program   0x0000d6
+.config_2007_/HOME/ANDRE/DOCUMENTS/2019.1/MIC       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000000      
+                            0x000004    0x00006e      
+                            0x002007    0x002007      
+            109 out of 1158 program addresses used, program memory utilization is 9%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   INICIO   0x00000d    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                     MAIN   0x000018    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA1   0x00001f    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA1_2   0x000022    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA1_2_C1   0x000029    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA1_2_C2   0x00002e    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA1_2_C3   0x000033    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA2   0x000036    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA2_2   0x000039    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA2_2_C1   0x000040    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA2_2_C2   0x000044    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA2_2_C3   0x000048    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA3   0x00004d    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA3_2   0x000050    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA3_3   0x000054    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA3_3_C1   0x000059    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA3_3_C2   0x00005e    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA4   0x000061    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA4_2   0x000064    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA4_3   0x000068    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA4_4   0x00006c    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  SAI_INT   0x000007    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+               SUBROTINA1   0x00000c    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  SAI_INT   0x000007    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+               SUBROTINA1   0x00000c    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                   INICIO   0x00000d    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                     MAIN   0x000018    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA1   0x00001f    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA1_2   0x000022    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA1_2_C1   0x000029    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA1_2_C2   0x00002e    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA1_2_C3   0x000033    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA2   0x000036    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA2_2   0x000039    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA2_2_C1   0x000040    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA2_2_C2   0x000044    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA2_2_C3   0x000048    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA3   0x00004d    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA3_2   0x000050    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA3_3   0x000054    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA3_3_C1   0x000059    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+             ROTINA3_3_C2   0x00005e    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                  ROTINA4   0x000061    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA4_2   0x000064    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA4_3   0x000068    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+                ROTINA4_4   0x00006c    program     static /home/andre/Documents/2019.1/Microcontroladores/Atividade3.X/Atividade3.ASM
+
+

@@ -1,0 +1,44 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Fri Jun 28 17:40:35 2019
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000000
+                   .org_1       code   0x000000    program   0x000002
+                   .org_2       code   0x000004    program   0x000042
+.config_2007_/HOME/ANDRE/DOCUMENTS/2019.1/MIC       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000000      
+                            0x000004    0x000024      
+                            0x002007    0x002007      
+            35 out of 1158 program addresses used, program memory utilization is 3%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   INICIO   0x00000d    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+                     LIGA   0x00001d    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+                     MAIN   0x000019    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+                  SAI_INT   0x000007    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+               SUBROTINA1   0x00000c    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  SAI_INT   0x000007    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+               SUBROTINA1   0x00000c    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+                   INICIO   0x00000d    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+                     MAIN   0x000019    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+                     LIGA   0x00001d    program     static /home/andre/Documents/2019.1/Microcontroladores/EXEMPLO 1 AULA 3/aula3_exemplo1.ASM
+
+

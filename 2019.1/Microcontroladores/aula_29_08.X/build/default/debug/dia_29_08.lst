@@ -1,0 +1,622 @@
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00002 ;*              MODIFICAÇÕES PARA USO COM 12F675                   *
+                      00003 ;*                FEITAS PELO PROF. MARDSON                        *
+                      00004 ;*                      JUNHO DE 2019                              *
+                      00005 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00006 
+                      00007 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00008 ;*                       ATIVIDADE 3                               *
+                      00009 ;*              ANDRE OLIVEIRA DE SOUSA - 11325684                 *
+                      00010 ;*         DESENVOLVIDO PELA MOSAICO ENGENHARIA E CONSULTORIA      *
+                      00011 ;*   VERSÃO: 1.0                           DATA: 17/06/03          *
+                      00012 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00013 ;*                     DESCRIÇÃO DO ARQUIVO                        *
+                      00014 ;*-----------------------------------------------------------------*
+                      00015 ;*   MODELO PARA O PIC 12F675                                      *
+                      00016 ;*                                                                 *
+                      00017 ;*                                                                 *
+                      00018 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00019 
+                      00020 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00021 ;*                     ARQUIVOS DE DEFINIÇÕES                      *
+                      00022 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00023 #INCLUDE <p16f628a.inc> ;ARQUIVO PADRÃO MICROCHIP PARA 16F628A
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Mar 17 2019
+                      00005 ;  MPASM PIC16F628A processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2019 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00386         LIST
+                      00024 
+2007   3F30           00025         __CONFIG _BODEN_OFF & _CP_OFF & _CPD_OFF & _LVP_OFF & _PWRTE_ON & _WDT_OFF & _MCLRE_ON & _INTRC_
+                            OSC_NOCLKOUT
+                      00026 
+                      00027 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00028 ;*                    PAGINAÇÃO DE MEMÓRIA                         *
+                      00029 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00030 ;DEFINIÇÃO DE COMANDOS DE USUÁRIO PARA ALTERAÇÃO DA PÁGINA DE MEMÓRIA
+                      00031 #DEFINE BANK0   BCF STATUS,RP0  ;SETA BANK 0 DE MEMÓRIA
+                      00032 #DEFINE BANK1   BSF STATUS,RP0  ;SETA BANK 1 DE MAMÓRIA
+                      00033 
+                      00034 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00035 ;*                         VARIÁVEIS                               *
+                      00036 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00037 ; DEFINIÇÃO DOS NOMES E ENDEREÇOS DE TODAS AS VARIÁVEIS UTILIZADAS 
+                      00038 ; PELO SISTEMA
+                      00039 
+                      00040         CBLOCK  0x20    ;ENDEREÇO INICIAL DA MEMÓRIA DE
+                      00041                                         ;USUÁRIO
+  00000020            00042                 W_TEMP          ;REGISTRADORES TEMPORÁRIOS PARA USO
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000021            00043                 STATUS_TEMP     ;JUNTO ÀS INTERRUPÇÕES
+                      00044 
+                      00045                 ;NOVAS VARIÁVEIS
+                      00046                 
+  00000022            00047                 TEMP1
+                      00048 
+                      00049         ENDC                    ;FIM DO BLOCO DE MEMÓRIA
+                      00050 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00051 ;*                        FLAGS INTERNOS                           *
+                      00052 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00053 ; DEFINIÇÃO DE TODOS OS FLAGS UTILIZADOS PELO SISTEMA
+                      00054 
+                      00055 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00056 ;*                         CONSTANTES                              *
+                      00057 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00058 ; DEFINIÇÃO DE TODAS AS CONSTANTES UTILIZADAS PELO SISTEMA
+                      00059 
+                      00060 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00061 ;*                           ENTRADAS                              *
+                      00062 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00063 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO ENTRADA
+                      00064 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00065 
+                      00066 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00067 ;*                           SAÍDAS                                *
+                      00068 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00069 ; DEFINIÇÃO DE TODOS OS PINOS QUE SERÃO UTILIZADOS COMO SAÍDA
+                      00070 ; RECOMENDAMOS TAMBÉM COMENTAR O SIGNIFICADO DE SEUS ESTADOS (0 E 1)
+                      00071 
+                      00072 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00073 ;*                       VETOR DE RESET                            *
+                      00074 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00075 
+                      00076         ORG     0x00                    ;ENDEREÇO INICIAL DE PROCESSAMENTO
+0000   2???           00077         GOTO    INICIO
+                      00078         
+                      00079 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00080 ;*                    INÍCIO DA INTERRUPÇÃO                        *
+                      00081 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00082 ; ENDEREÇO DE DESVIO DAS INTERRUPÇÕES. A PRIMEIRA TAREFA É SALVAR OS
+                      00083 ; VALORES DE "W" E "STATUS" PARA RECUPERAÇÃO FUTURA
+                      00084 
+                      00085         ORG     0x04                    ;ENDEREÇO INICIAL DA INTERRUPÇÃO
+0004   00A0           00086         MOVWF   W_TEMP          ;COPIA W PARA W_TEMP
+0005   0E03           00087         SWAPF   STATUS,W
+0006   00A1           00088         MOVWF   STATUS_TEMP     ;COPIA STATUS PARA STATUS_TEMP
+                      00089 
+                      00090 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00091 ;*                    ROTINA DE INTERRUPÇÃO                        *
+                      00092 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00093 ; AQUI SERÃO ESCRITAS AS ROTINAS DE RECONHECIMENTO E TRATAMENTO DAS
+                      00094 ; INTERRUPÇÕES
+                      00095 
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00096 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00097 ;*                 ROTINA DE SAÍDA DA INTERRUPÇÃO                  *
+                      00098 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00099 ; OS VALORES DE "W" E "STATUS" DEVEM SER RECUPERADOS ANTES DE 
+                      00100 ; RETORNAR DA INTERRUPÇÃO
+                      00101 
+0007                  00102 SAI_INT
+0007   0E21           00103         SWAPF   STATUS_TEMP,W
+0008   0083           00104         MOVWF   STATUS          ;MOVE STATUS_TEMP PARA STATUS
+0009   0EA0           00105         SWAPF   W_TEMP,F
+000A   0E20           00106         SWAPF   W_TEMP,W        ;MOVE W_TEMP PARA W
+000B   0009           00107         RETFIE
+                      00108 
+                      00109 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00110 ;*                       ROTINAS E SUBROTINAS                      *
+                      00111 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00112 ; CADA ROTINA OU SUBROTINA DEVE POSSUIR A DESCRIÇÃO DE FUNCIONAMENTO
+                      00113 ; E UM NOME COERENTE ÀS SUAS FUNÇÕES.
+                      00114 
+000C                  00115 SUBROTINA1
+                      00116 
+                      00117         ;CORPO DA ROTINA
+                      00118 
+000C   0008           00119         RETURN
+                      00120 
+                      00121 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00122 ;*                     INICIO DO PROGRAMA                          *
+                      00123 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00124         
+000D                  00125 INICIO
+000D   1683           00126         BANK1                           ;ALTERA PARA O BANCO 1
+000E   3003           00127         MOVLW   B'00000011' ;CONFIGURA TODAS AS PORTAS DO GPIO (PINOS)
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000F   0085           00128         MOVWF   TRISA           ;COMO SAÍDAS
+0010   3004           00129         MOVLW   B'00000100'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0011   0081           00130         MOVWF   OPTION_REG      ;DEFINE OPÇÕES DE OPERAÇÃO
+0012   3000           00131         MOVLW   B'00000000'
+0013   008B           00132         MOVWF   INTCON          ;DEFINE OPÇÕES DE INTERRUPÇÕES
+0014   1283           00133         BANK0                           ;RETORNA PARA O BANCO
+0015   3007           00134         MOVLW   B'00000111'
+0016   009F           00135         MOVWF   CMCON           ;DEFINE O MODO DE OPERAÇÃO DO COMPARADOR ANALÓGICO
+                      00136 
+                      00137 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00138 ;*                     INICIALIZAÇÃO DAS VARIÁVEIS                 *
+                      00139 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00140 
+                      00141 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00142 ;*                     ROTINA PRINCIPAL                            *
+                      00143 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+0017                  00144 MAIN
+                      00145 
+                      00146         ;CORPO DA ROTINA PRINCIPAL 
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0017   1C05           00147         BTFSS   PORTA,RA0       ;TESTES PARA SABER QUAL A 
+0018   2???           00148         GOTO    $ + 4           ;COMBINACAO DE GP0 E GP1
+0019   1C85           00149         BTFSS   PORTA,RA1       ;PARA SABER EM QUAL INTENSIDADE DEVE DEIXAR
+001A   2???           00150         GOTO    ROTINA3         ;O GP5
+001B   2???           00151         GOTO    ROTINA4         ;UMA DAS 4 OPCOES DE ROTINA DE INTENSIDADE DO LED
+001C   1885           00152         BTFSC   PORTA,RA1       ;SERA ESCOLHIDA
+001D   2???           00153         GOTO    ROTINA2         ;AQUI TERMINA A FASE DE TESTES E ESCOLHA DA ROTINA ADEQUADA
+                      00154         
+                      00155 
+                      00156 ;CADA ROTINA E SUBROTINA ABAIXO VISA DEIXAR GP5 EM HIGH E EM LOW O PERCENTUAL DO PERIODO PEDIDO 
+                      00157 ;LEMBRANDO QUE TEMOS UMA FREQUENCIA DE 500 HZ, O QUE INDICA UM PERIODO DE 2 ms
+                      00158 ;QUE CORRESPONDE A 200 MICROSSEGUNDOS = 200 CILOS DE MAQUINA
+                      00159         
+                      00160         
+001E                  00161 ROTINA1                         ;ESSA ROTINA DEIXA GP5 5% EM HIGH E 95% EM LOW QUANDO GP0 = 0 E GP1 = 0
+001E   1605           00162         BSF     PORTA,RA4       ;SETA GP5
+001F   3020           00163         MOVLW   .32             
+0020   00A2           00164         MOVWF   TEMP1           ;SETA TEMP1 COM 32
+Warning[207]: Found label after column 1. (ROTINA1_2)
+0021                  00165     ROTINA1_2                   ;NESTA ETAPA VAMOS DECREMENTAR TEMP1 ATE ZERO
+0021   0BA2           00166         DECFSZ  TEMP1,F         ;PARA JUNTAMENTE COM AS INSTRUCOES "NOP" ABAIXO
+0022   2???           00167         GOTO    ROTINA1_2       ;GASTAR O TEMPO NECESSARIO ATE CHEGARMOS EM BCF
+0023   0000           00168         NOP
+0024   0000           00169         NOP
+0025   1205           00170         BCF     PORTA,RA4       ;AQUI COLOCAMOS GP5 EM LOW POR 95% DO PERIODO
+0026   30FA           00171         MOVLW   .250            ;SETA TEMP1 COM 250
+0027   00A2           00172         MOVWF   TEMP1
+Warning[207]: Found label after column 1. (ROTINA1_2_C1)
+0028                  00173     ROTINA1_2_C1                ;NESTA ETAPA SEGUE A MESMA LOGICA DE DECREMENTAR TEMP1
+0028   0BA2           00174         DECFSZ  TEMP1,F         ;PARA AO FINAL DA ROTINA QUANDO CHEGAR NO 
+0029   2???           00175         GOTO    ROTINA1_2_C1    ;GOTO MAIN, JA TERMOS GASTO O TEMPO NECESSARIO
+002A   0000           00176         NOP                     ;COM GP5 EM LOW 
+002B   30FA           00177         MOVLW   .250            ;SETAMOS OUTRO VALOR PARA TEMP1 POIS AINDA NAO
+002C   00A2           00178         MOVWF   TEMP1           ;ATINGIMOS O TEMPO NECESSARIO E NAO PODIAMOS COLOCAR MAIS QUE 255 EM TEM
+                            P1
+Warning[207]: Found label after column 1. (ROTINA1_2_C2)
+002D                  00179     ROTINA1_2_C2                ;NESTA ETAPA CONTINUAMOS DECREMENTANDO TEMP1
+002D   0BA2           00180         DECFSZ  TEMP1,F         ;PARA JUNTAMENTE COM OUTRAS INTRUCOES, ATINGIRMOS
+002E   2???           00181         GOTO    ROTINA1_2_C2    ;O TEMPO EM QUE GP5 DEVE FICAR EM LOW
+002F   0000           00182         NOP
+0030   3083           00183         MOVLW   .131            ;AQUI SE REPETE O PROCEDIMENTO POIS AINDA NAO
+0031   00A2           00184         MOVWF   TEMP1           ;ATINGIMOS O TEMPO NECESSARIO
+Warning[207]: Found label after column 1. (ROTINA1_2_C3)
+0032                  00185     ROTINA1_2_C3
+0032   0BA2           00186         DECFSZ  TEMP1,F
+0033   2???           00187         GOTO    ROTINA1_2_C3    
+                      00188         
+0034   2???           00189     GOTO    MAIN                ;FINALMENTE, CHEGANDO AQUI, JA TEMOS DEIXADO GP5 95% EM LOW
+                      00190 
+0035                  00191 ROTINA2                         ;ESSA ROTINA DEIXA GP5 20% EM HIGH E 80% EM LOW QUANDO GP0 = 0 E GP1 = 1
+0035   1605           00192         BSF     PORTA,RA4       ;A SEQUENCIA ATE O GOTO MAIN SEGUE EXATAMENTE A MESMA LOGICA
+0036   3084           00193         MOVLW   .132            ;DA ROTINA1 QUE JA FOI EXPLICADA
+0037   00A2           00194         MOVWF   TEMP1
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[207]: Found label after column 1. (ROTINA2_2)
+0038                  00195     ROTINA2_2    
+0038   0BA2           00196         DECFSZ  TEMP1,F
+0039   2???           00197         GOTO    ROTINA2_2
+003A   0000           00198         NOP
+003B   0000           00199         NOP
+003C   1205           00200         BCF     PORTA,RA4
+003D   30FA           00201         MOVLW   .250   
+003E   00A2           00202         MOVWF   TEMP1
+Warning[207]: Found label after column 1. (ROTINA2_2_C1)
+003F                  00203     ROTINA2_2_C1   
+003F   0BA2           00204         DECFSZ  TEMP1,F
+0040   2???           00205         GOTO    ROTINA2_2_C1
+0041   30FA           00206         MOVLW   .250   
+0042   00A2           00207         MOVWF   TEMP1
+Warning[207]: Found label after column 1. (ROTINA2_2_C2)
+0043                  00208     ROTINA2_2_C2
+0043   0BA2           00209         DECFSZ  TEMP1,F
+0044   2???           00210         GOTO    ROTINA2_2_C2
+0045   301F           00211         MOVLW   .31   
+0046   00A2           00212         MOVWF   TEMP1
+Warning[207]: Found label after column 1. (ROTINA2_2_C3)
+0047                  00213     ROTINA2_2_C3
+0047   0BA2           00214         DECFSZ  TEMP1,F
+0048   2???           00215         GOTO    ROTINA2_2_C3
+0049   0000           00216         NOP
+004A   0000           00217         NOP
+                      00218         
+004B   2???           00219     GOTO    MAIN
+                      00220     
+004C                  00221 ROTINA3                         ;ESSA ROTINA DEIXA GP5 60% EM HIGH E 40% EM LOW QUANDO GP0 = 1 E GP1 = 0
+004C   1605           00222         BSF     PORTA,RA4       ;TODA A ROTINA É EXATAMENTE IGUAL A ROTINA1 QUE JA FOI COMENTADA
+004D   30FA           00223         MOVLW   .250   
+004E   00A2           00224         MOVWF   TEMP1
+Warning[207]: Found label after column 1. (ROTINA3_2)
+004F                  00225     ROTINA3_2    
+004F   0BA2           00226         DECFSZ  TEMP1,F
+0050   2???           00227         GOTO    ROTINA3_2
+0051   3095           00228         MOVLW   .149
+0052   00A2           00229         MOVWF   TEMP1  
+Warning[207]: Found label after column 1. (ROTINA3_3)
+0053                  00230     ROTINA3_3
+0053   0BA2           00231         DECFSZ  TEMP1,F
+0054   2???           00232         GOTO    ROTINA3_3
+0055   1205           00233         BCF     PORTA,RA4
+0056   30FA           00234         MOVLW   .250
+0057   00A2           00235         MOVWF   TEMP1  
+Warning[207]: Found label after column 1. (ROTINA3_3_C1)
+0058                  00236     ROTINA3_3_C1
+0058   0BA2           00237         DECFSZ  TEMP1,F
+0059   2???           00238         GOTO    ROTINA3_3_C1
+005A   0000           00239         NOP 
+005B   300F           00240         MOVLW   .15
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+005C   00A2           00241         MOVWF   TEMP1  
+Warning[207]: Found label after column 1. (ROTINA3_3_C2)
+005D                  00242     ROTINA3_3_C2
+005D   0BA2           00243         DECFSZ  TEMP1,F
+005E   2???           00244         GOTO    ROTINA3_3_C2
+                      00245 
+005F   2???           00246     GOTO    MAIN
+                      00247     
+0060                  00248 ROTINA4                             ;ESSA ROTINA DEIXA GP5 100% EM HIGH E 0% EM LOW QUANDO GP0 = 1 E GP1
+                             = 1
+0060   1605           00249         BSF     PORTA,RA4           ;NOVAMENTE O RESTANDO DO CODIGO SEGUE A LOGICA DA ROTINA1
+0061   30FA           00250         MOVLW   .250                ;ONDE DEVEMOS GASTAR, NESSE CASO, OS 100% DO TEMPO, OU SEJA,
+0062   00A2           00251         MOVWF   TEMP1               ;OS 2 ms COM GP5 EM HIGH
+Warning[207]: Found label after column 1. (ROTINA4_2)
+0063                  00252     ROTINA4_2    
+0063   0BA2           00253         DECFSZ  TEMP1,F
+0064   2???           00254         GOTO    ROTINA4_2
+0065   30FA           00255         MOVLW   .250 
+0066   00A2           00256         MOVWF   TEMP1 
+Warning[207]: Found label after column 1. (ROTINA4_3)
+0067                  00257     ROTINA4_3
+0067   0BA2           00258         DECFSZ  TEMP1,F 
+0068   2???           00259         GOTO    ROTINA4_3
+0069   30A5           00260         MOVLW   .165  
+006A   00A2           00261         MOVWF   TEMP1 
+Warning[207]: Found label after column 1. (ROTINA4_4)
+006B                  00262     ROTINA4_4
+006B   0BA2           00263         DECFSZ  TEMP1,F
+006C   2???           00264         GOTO    ROTINA4_4
+                      00265         
+006D   2???           00266     GOTO    MAIN    
+                      00267 
+                      00268 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00269 ;*                       FIM DO PROGRAMA                           *
+                      00270 ;* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                      00271 
+3F30                  00272         END
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADDEN                             00000003
+ADEN                              00000003
+BANK0                             BCF STATUS,RP0
+BANK1                             BSF STATUS,RP0
+BRGH                              00000002
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CIS                               00000003
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000001F
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+DATA_CP_OFF                       00003FFF
+DATA_CP_ON                        00003EFF
+DC                                00000001
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INICIO                            0000000D
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+MAIN                              00000017
+NOT_BO                            00000000
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+NOT_BOD                           00000000
+NOT_BOR                           00000000
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+OERR                              00000001
+OPTION_REG                        00000081
+OSCF                              00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+PORTA                             00000005
+PORTB                             00000006
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+ROTINA1                           0000001E
+ROTINA1_2                         00000021
+ROTINA1_2_C1                      00000028
+ROTINA1_2_C2                      0000002D
+ROTINA1_2_C3                      00000032
+ROTINA2                           00000035
+ROTINA2_2                         00000038
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ROTINA2_2_C1                      0000003F
+ROTINA2_2_C2                      00000043
+ROTINA2_2_C3                      00000047
+ROTINA3                           0000004C
+ROTINA3_2                         0000004F
+ROTINA3_3                         00000053
+ROTINA3_3_C1                      00000058
+ROTINA3_3_C2                      0000005D
+ROTINA4                           00000060
+ROTINA4_2                         00000063
+ROTINA4_3                         00000067
+ROTINA4_4                         0000006B
+RP0                               00000005
+RP1                               00000006
+RX9                               00000006
+RX9D                              00000000
+SAI_INT                           00000007
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+STATUS                            00000003
+STATUS_TEMP                       00000021
+SUBROTINA1                        0000000C
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1OSCEN                           00000003
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TEMP1                             00000022
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISA6                            00000006
+TRISA7                            00000007
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRMT                              00000001
+TX9                               00000006
+TX9D                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             0000009F
+VREN                              00000007
+VROE                              00000006
+VRR                               00000005
+W                                 00000000
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+W_TEMP                            00000020
+Z                                 00000002
+_.org_1_0018                      00000018
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_DEVID1                           00002006
+_ER_OSC_CLKOUT                    00003FFF
+MPASM 5.84  /HOME/ANDRE/DOCUMENTS/2019.1/MIC   9-5-2019  10:49:55         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_ER_OSC_NOCLKOUT                  00003FFE
+_EXTCLK_OSC                       00003FEF
+_FOSC_ECIO                        00003FEF
+_FOSC_EXTRCCLK                    00003FFF
+_FOSC_EXTRCIO                     00003FFE
+_FOSC_HS                          00003FEE
+_FOSC_INTOSCCLK                   00003FFD
+_FOSC_INTOSCIO                    00003FFC
+_FOSC_LP                          00003FEC
+_FOSC_XT                          00003FED
+_HS_OSC                           00003FEE
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_INTOSC_OSC_CLKOUT                00003FFD
+_INTOSC_OSC_NOCLKOUT              00003FFC
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FEC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC_CLKOUT                    00003FFF
+_RC_OSC_NOCLKOUT                  00003FFE
+_WDTE_OFF                         00003FFB
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FED
+__16F628A                         00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
+
+Errors   :     0
+Warnings :    15 reported,     0 suppressed
+Messages :     2 reported,     0 suppressed
+
+
