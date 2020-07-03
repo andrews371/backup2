@@ -5,7 +5,7 @@
 #         Pierre-Alain Muller <pierre-alain.muller@uha.fr>
 # License: GPL3
 
-def graph():
+def diagram():
 
     import numpy as np
     import pandas as pd
@@ -300,7 +300,7 @@ def graph():
             }
         if title:
             plt.title(title,fontdict=font, y=0.9, x=0.5)
-        plt.savefig('cd-diagram.png',bbox_inches='tight')
+        plt.savefig('diagrama_resultados_algoritmos.png',bbox_inches='tight')
 
     def wilcoxon_holm(alpha=0.05, df_perf=None):
         """
@@ -380,7 +380,7 @@ def graph():
         # return the p-values and the average ranks
         return p_values, average_ranks, max_nb_datasets
 
-    df_perf = pd.read_csv('example.csv',index_col=False)
+    df_perf = pd.read_csv('comp_algoritmos_diagrama.csv',index_col=False)
 
     draw_cd_diagram(df_perf=df_perf, title='Accuracy', labels=True)
 
@@ -389,7 +389,7 @@ def graph():
     import tkinter as tk
     root = tk.Tk()
 
-    imagem = tk.PhotoImage(file="cd-diagram.png")
+    imagem = tk.PhotoImage(file="diagrama_resultados_algoritmos.png")
     w = tk.Label(root, image=imagem)
     w.imagem = imagem
     w.pack()
