@@ -37801,3 +37801,77 @@ dispatch/</req<@chrome://marionette/content/listener.js:527:14
 dispatch/<@chrome://marionette/content/listener.js:520:15
 1584154445165	Marionette	INFO	Stopped listening on port 44080
 1584154463372	Marionette	INFO	Stopped listening on port 38611
+1595329871715	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.DUDgFYhYggKg"
+1595329880764	Marionette	INFO	Listening on port 39433
+1595329880868	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+1595329986220	Marionette	INFO	Stopped listening on port 39433
+1595329998801	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.OdY3MR1Hc4Oj"
+1595330004671	Marionette	INFO	Listening on port 41939
+1595330004720	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+1595330035394	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.wkR4pQfEH1AH"
+1595330041067	Marionette	INFO	Listening on port 41728
+1595330041122	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+1595330058299	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:245:13
+TimedPromise@chrome://marionette/content/sync.js:230:10
+Sleep@chrome://marionette/content/sync.js:283:10
+dispatchPause@chrome://marionette/content/action.js:1482:10
+toEvents/<@chrome://marionette/content/action.js:1156:16
+action.dispatchTickActions@chrome://marionette/content/action.js:1060:35
+action.dispatch/chainEvents<@chrome://marionette/content/action.js:1028:20
+action.dispatch@chrome://marionette/content/action.js:1034:5
+performActions@chrome://marionette/content/listener.js:853:16
+dispatch/</req<@chrome://marionette/content/listener.js:527:14
+dispatch/<@chrome://marionette/content/listener.js:520:15
+1595330059730	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:245:13
+TimedPromise@chrome://marionette/content/sync.js:230:10
+Sleep@chrome://marionette/content/sync.js:283:10
+dispatchPause@chrome://marionette/content/action.js:1482:10
+toEvents/<@chrome://marionette/content/action.js:1156:16
+action.dispatchTickActions@chrome://marionette/content/action.js:1060:35
+action.dispatch/chainEvents<@chrome://marionette/content/action.js:1028:20
+action.dispatch@chrome://marionette/content/action.js:1034:5
+performActions@chrome://marionette/content/listener.js:853:16
+dispatch/</req<@chrome://marionette/content/listener.js:527:14
+dispatch/<@chrome://marionette/content/listener.js:520:15
+1595330061071	Marionette	INFO	Stopped listening on port 41728
+1595330076968	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.j8PjhNpw7zZ6"
+1595330082351	Marionette	INFO	Listening on port 44343
+1595330082388	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+JavaScript warning: https://www.oddsportal.com/res/x/global-200716105953.js, line 1: unreachable code after return statement
+1595330097818	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:245:13
+TimedPromise@chrome://marionette/content/sync.js:230:10
+Sleep@chrome://marionette/content/sync.js:283:10
+dispatchPause@chrome://marionette/content/action.js:1482:10
+toEvents/<@chrome://marionette/content/action.js:1156:16
+action.dispatchTickActions@chrome://marionette/content/action.js:1060:35
+action.dispatch/chainEvents<@chrome://marionette/content/action.js:1028:20
+action.dispatch@chrome://marionette/content/action.js:1034:5
+performActions@chrome://marionette/content/listener.js:853:16
+dispatch/</req<@chrome://marionette/content/listener.js:527:14
+dispatch/<@chrome://marionette/content/listener.js:520:15
+1595330099139	Marionette	WARN	TimedPromise timed out after 0 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:245:13
+TimedPromise@chrome://marionette/content/sync.js:230:10
+Sleep@chrome://marionette/content/sync.js:283:10
+dispatchPause@chrome://marionette/content/action.js:1482:10
+toEvents/<@chrome://marionette/content/action.js:1156:16
+action.dispatchTickActions@chrome://marionette/content/action.js:1060:35
+action.dispatch/chainEvents<@chrome://marionette/content/action.js:1028:20
+action.dispatch@chrome://marionette/content/action.js:1034:5
+performActions@chrome://marionette/content/listener.js:853:16
+dispatch/</req<@chrome://marionette/content/listener.js:527:14
+dispatch/<@chrome://marionette/content/listener.js:520:15
